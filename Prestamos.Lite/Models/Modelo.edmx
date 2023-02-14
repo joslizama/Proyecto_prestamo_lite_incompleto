@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Prestamos_liteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="apellido" Type="varchar" MaxLength="100" />
+          <Property Name="direccion" Type="varchar(max)" />
+          <Property Name="comuna" Type="varchar" MaxLength="100" />
+          <Property Name="ciudad" Type="varchar" MaxLength="100" />
+          <Property Name="correo" Type="varchar" MaxLength="100" />
+          <Property Name="telefono" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Cuotas">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prestamo_id" Type="int" />
+          <Property Name="numero_cuota" Type="int" />
+          <Property Name="fecha_pago_cuota" Type="date" />
+          <Property Name="monto_cuota" Type="float" />
+          <Property Name="estado_cuota" Type="varchar" MaxLength="100" />
+          <Property Name="fecha_pago_cliente" Type="date" />
+        </EntityType>
+        <EntityType Name="Prestamo">
+          <Key>
+            <PropertyRef Name="numero_operacion" />
+          </Key>
+          <Property Name="numero_operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_registro_prestamo" Type="date" />
+          <Property Name="tipo_moneda_id" Type="int" />
+          <Property Name="tipo_pago_id" Type="int" />
+          <Property Name="fecha_inicio_pago" Type="date" />
+          <Property Name="fecha_fin_pago" Type="date" />
+          <Property Name="monto_prestamo" Type="float" />
+          <Property Name="numero_cuotas" Type="int" />
+          <Property Name="intereses" Type="float" />
+          <Property Name="monto_cuotas_sin_interes" Type="float" />
+          <Property Name="monto_cuotas_con_interes" Type="float" />
+          <Property Name="total_prestamo" Type="float" />
+          <Property Name="cliente_id" Type="varchar" MaxLength="100" />
+          <Property Name="estado_prestamo" Type="varchar" MaxLength="100" />
+          <Property Name="clausulas" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Tipo_moneda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_divisa" Type="varchar" MaxLength="100" />
+          <Property Name="abreviatura" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+          <Property Name="descripcion" Type="varchar(max)" />
+          <Property Name="valor_dias" Type="int" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cliente_id" Type="varchar" MaxLength="100" />
+          <Property Name="contraseña" Type="varchar" MaxLength="100" />
+          <Property Name="tipo_id" Type="int" />
+        </EntityType>
+        <Association Name="FK__Cuotas__prestamo__21B6055D">
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="0..1" />
+          <End Role="Cuotas" Type="Self.Cuotas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prestamo">
+              <PropertyRef Name="numero_operacion" />
+            </Principal>
+            <Dependent Role="Cuotas">
+              <PropertyRef Name="prestamo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prestamo__client__182C9B23">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prestamo__tipo_m__164452B1">
+          <End Role="Tipo_moneda" Type="Self.Tipo_moneda" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_moneda">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="tipo_moneda_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prestamo__tipo_p__173876EA">
+          <End Role="Tipo_pago" Type="Self.Tipo_pago" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="tipo_pago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__cliente__08EA5793">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__tipo_id__09DE7BCC">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="tipo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Prestamos_liteModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cuotas" EntityType="Self.Cuotas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Prestamo" EntityType="Self.Prestamo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_moneda" EntityType="Self.Tipo_moneda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_pago" EntityType="Self.Tipo_pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Cuotas__prestamo__21B6055D" Association="Self.FK__Cuotas__prestamo__21B6055D">
+            <End Role="Prestamo" EntitySet="Prestamo" />
+            <End Role="Cuotas" EntitySet="Cuotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prestamo__client__182C9B23" Association="Self.FK__Prestamo__client__182C9B23">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Prestamo" EntitySet="Prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prestamo__tipo_m__164452B1" Association="Self.FK__Prestamo__tipo_m__164452B1">
+            <End Role="Tipo_moneda" EntitySet="Tipo_moneda" />
+            <End Role="Prestamo" EntitySet="Prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prestamo__tipo_p__173876EA" Association="Self.FK__Prestamo__tipo_p__173876EA">
+            <End Role="Tipo_pago" EntitySet="Tipo_pago" />
+            <End Role="Prestamo" EntitySet="Prestamo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__cliente__08EA5793" Association="Self.FK__Usuario__cliente__08EA5793">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__tipo_id__09DE7BCC" Association="Self.FK__Usuario__tipo_id__09DE7BCC">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Prestamos_liteModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="rut" />
+          </Key>
+          <Property Name="rut" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="comuna" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ciudad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Prestamoes" Relationship="Self.FK__Prestamo__client__182C9B23" FromRole="Cliente" ToRole="Prestamo" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuario__cliente__08EA5793" FromRole="Cliente" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Cuota">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prestamo_id" Type="Int32" />
+          <Property Name="numero_cuota" Type="Int32" />
+          <Property Name="fecha_pago_cuota" Type="DateTime" Precision="0" />
+          <Property Name="monto_cuota" Type="Double" />
+          <Property Name="estado_cuota" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_pago_cliente" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Prestamo" Relationship="Self.FK__Cuotas__prestamo__21B6055D" FromRole="Cuotas" ToRole="Prestamo" />
+        </EntityType>
+        <EntityType Name="Prestamo">
+          <Key>
+            <PropertyRef Name="numero_operacion" />
+          </Key>
+          <Property Name="numero_operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_registro_prestamo" Type="DateTime" Precision="0" />
+          <Property Name="tipo_moneda_id" Type="Int32" />
+          <Property Name="tipo_pago_id" Type="Int32" />
+          <Property Name="fecha_inicio_pago" Type="DateTime" Precision="0" />
+          <Property Name="fecha_fin_pago" Type="DateTime" Precision="0" />
+          <Property Name="monto_prestamo" Type="Double" />
+          <Property Name="numero_cuotas" Type="Int32" />
+          <Property Name="intereses" Type="Double" />
+          <Property Name="monto_cuotas_sin_interes" Type="Double" />
+          <Property Name="monto_cuotas_con_interes" Type="Double" />
+          <Property Name="total_prestamo" Type="Double" />
+          <Property Name="cliente_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="estado_prestamo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="clausulas" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Prestamo__client__182C9B23" FromRole="Prestamo" ToRole="Cliente" />
+          <NavigationProperty Name="Cuotas" Relationship="Self.FK__Cuotas__prestamo__21B6055D" FromRole="Prestamo" ToRole="Cuotas" />
+          <NavigationProperty Name="Tipo_moneda" Relationship="Self.FK__Prestamo__tipo_m__164452B1" FromRole="Prestamo" ToRole="Tipo_moneda" />
+          <NavigationProperty Name="Tipo_pago" Relationship="Self.FK__Prestamo__tipo_p__173876EA" FromRole="Prestamo" ToRole="Tipo_pago" />
+        </EntityType>
+        <EntityType Name="Tipo_moneda">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_divisa" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="abreviatura" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Prestamoes" Relationship="Self.FK__Prestamo__tipo_m__164452B1" FromRole="Tipo_moneda" ToRole="Prestamo" />
+        </EntityType>
+        <EntityType Name="Tipo_pago">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="valor_dias" Type="Int32" />
+          <NavigationProperty Name="Prestamoes" Relationship="Self.FK__Prestamo__tipo_p__173876EA" FromRole="Tipo_pago" ToRole="Prestamo" />
+        </EntityType>
+        <EntityType Name="tipo_usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuario__tipo_id__09DE7BCC" FromRole="tipo_usuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cliente_id" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="contraseña" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_id" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Usuario__cliente__08EA5793" FromRole="Usuario" ToRole="Cliente" />
+          <NavigationProperty Name="tipo_usuario" Relationship="Self.FK__Usuario__tipo_id__09DE7BCC" FromRole="Usuario" ToRole="tipo_usuario" />
+        </EntityType>
+        <Association Name="FK__Prestamo__client__182C9B23">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__cliente__08EA5793">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="rut" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cuotas__prestamo__21B6055D">
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="0..1" />
+          <End Role="Cuotas" Type="Self.Cuota" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Prestamo">
+              <PropertyRef Name="numero_operacion" />
+            </Principal>
+            <Dependent Role="Cuotas">
+              <PropertyRef Name="prestamo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prestamo__tipo_m__164452B1">
+          <End Role="Tipo_moneda" Type="Self.Tipo_moneda" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_moneda">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="tipo_moneda_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Prestamo__tipo_p__173876EA">
+          <End Role="Tipo_pago" Type="Self.Tipo_pago" Multiplicity="0..1" />
+          <End Role="Prestamo" Type="Self.Prestamo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_pago">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Prestamo">
+              <PropertyRef Name="tipo_pago_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__tipo_id__09DE7BCC">
+          <End Role="tipo_usuario" Type="Self.tipo_usuario" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tipo_usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="tipo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Conexion" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="Cuotas" EntityType="Self.Cuota" />
+          <EntitySet Name="Prestamoes" EntityType="Self.Prestamo" />
+          <EntitySet Name="Tipo_moneda" EntityType="Self.Tipo_moneda" />
+          <EntitySet Name="Tipo_pago" EntityType="Self.Tipo_pago" />
+          <EntitySet Name="tipo_usuario" EntityType="Self.tipo_usuario" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Prestamo__client__182C9B23" Association="Self.FK__Prestamo__client__182C9B23">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Prestamo" EntitySet="Prestamoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__cliente__08EA5793" Association="Self.FK__Usuario__cliente__08EA5793">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cuotas__prestamo__21B6055D" Association="Self.FK__Cuotas__prestamo__21B6055D">
+            <End Role="Prestamo" EntitySet="Prestamoes" />
+            <End Role="Cuotas" EntitySet="Cuotas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prestamo__tipo_m__164452B1" Association="Self.FK__Prestamo__tipo_m__164452B1">
+            <End Role="Tipo_moneda" EntitySet="Tipo_moneda" />
+            <End Role="Prestamo" EntitySet="Prestamoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Prestamo__tipo_p__173876EA" Association="Self.FK__Prestamo__tipo_p__173876EA">
+            <End Role="Tipo_pago" EntitySet="Tipo_pago" />
+            <End Role="Prestamo" EntitySet="Prestamoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__tipo_id__09DE7BCC" Association="Self.FK__Usuario__tipo_id__09DE7BCC">
+            <End Role="tipo_usuario" EntitySet="tipo_usuario" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Prestamos_liteModelStoreContainer" CdmEntityContainer="Conexion">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="rut" ColumnName="rut" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="comuna" ColumnName="comuna" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cuotas">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Cuota">
+              <MappingFragment StoreEntitySet="Cuotas">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="prestamo_id" ColumnName="prestamo_id" />
+                <ScalarProperty Name="numero_cuota" ColumnName="numero_cuota" />
+                <ScalarProperty Name="fecha_pago_cuota" ColumnName="fecha_pago_cuota" />
+                <ScalarProperty Name="monto_cuota" ColumnName="monto_cuota" />
+                <ScalarProperty Name="estado_cuota" ColumnName="estado_cuota" />
+                <ScalarProperty Name="fecha_pago_cliente" ColumnName="fecha_pago_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Prestamoes">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Prestamo">
+              <MappingFragment StoreEntitySet="Prestamo">
+                <ScalarProperty Name="numero_operacion" ColumnName="numero_operacion" />
+                <ScalarProperty Name="fecha_registro_prestamo" ColumnName="fecha_registro_prestamo" />
+                <ScalarProperty Name="tipo_moneda_id" ColumnName="tipo_moneda_id" />
+                <ScalarProperty Name="tipo_pago_id" ColumnName="tipo_pago_id" />
+                <ScalarProperty Name="fecha_inicio_pago" ColumnName="fecha_inicio_pago" />
+                <ScalarProperty Name="fecha_fin_pago" ColumnName="fecha_fin_pago" />
+                <ScalarProperty Name="monto_prestamo" ColumnName="monto_prestamo" />
+                <ScalarProperty Name="numero_cuotas" ColumnName="numero_cuotas" />
+                <ScalarProperty Name="intereses" ColumnName="intereses" />
+                <ScalarProperty Name="monto_cuotas_sin_interes" ColumnName="monto_cuotas_sin_interes" />
+                <ScalarProperty Name="monto_cuotas_con_interes" ColumnName="monto_cuotas_con_interes" />
+                <ScalarProperty Name="total_prestamo" ColumnName="total_prestamo" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+                <ScalarProperty Name="estado_prestamo" ColumnName="estado_prestamo" />
+                <ScalarProperty Name="clausulas" ColumnName="clausulas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_moneda">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Tipo_moneda">
+              <MappingFragment StoreEntitySet="Tipo_moneda">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_divisa" ColumnName="nombre_divisa" />
+                <ScalarProperty Name="abreviatura" ColumnName="abreviatura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_pago">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Tipo_pago">
+              <MappingFragment StoreEntitySet="Tipo_pago">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="valor_dias" ColumnName="valor_dias" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tipo_usuario">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.tipo_usuario">
+              <MappingFragment StoreEntitySet="tipo_usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Prestamos_liteModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+                <ScalarProperty Name="contraseña" ColumnName="contraseña" />
+                <ScalarProperty Name="tipo_id" ColumnName="tipo_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

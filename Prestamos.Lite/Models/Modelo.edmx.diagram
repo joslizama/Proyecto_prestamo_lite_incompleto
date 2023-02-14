@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5c1f7c4bb8c045b0ae3153eb656b3d2b" Name="Diagram1">
+        <EntityTypeShape EntityType="Prestamos_liteModel.Cliente" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.Cuota" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.Prestamo" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.Tipo_moneda" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.Tipo_pago" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.tipo_usuario" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prestamos_liteModel.Usuario" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Prestamo__client__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Usuario__cliente__08EA5793" ManuallyRouted="false" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Cuotas__prestamo__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Prestamo__tipo_m__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Prestamo__tipo_p__173876EA" ManuallyRouted="false" />
+        <AssociationConnector Association="Prestamos_liteModel.FK__Usuario__tipo_id__09DE7BCC" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

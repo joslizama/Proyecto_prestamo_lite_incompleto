@@ -1,0 +1,73 @@
+﻿
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Iniciar sesion</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Estilos/Login_estilo.css">
+    <script src="~/Scripts/jquery-3.6.3.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Js/Validar_log.js"></script>
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Proyecto prestamos y cobros</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Home/Index">Volver al inicio</a>
+                    </li>
+                    
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Home/Acercade">Acerca del proyecto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+
+
+
+    <div class="login-form">
+        <form action="/Home/Logc" method="post" enctype="multipart/form-data" id="Validar_login">
+            <h2 class="text-center">Ingresar al sitio web</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Rut" name="rut" id="rut" required="required" >
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Contraseña" name="contraseña" id="contraseña" required="required">
+            </div>
+            <div class="form-group">
+                <center>
+                    <button type="submit" name="Ingresar" value="Ingresar" id="Ingresar" class="btn btn-primary">Ingresar</button>
+                    &nbsp;
+                    <button type="reset" name="Cancelar" value="Cancelar" id="Cancelar" class="btn btn-danger">Cancelar</button>
+                </center>
+                
+            </div>
+
+        </form>
+        <p class="text-center"><a href="/Home/Reg">Crear una cuenta</a></p>
+    </div>
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.slim.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
