@@ -109,9 +109,13 @@
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Js\Evento.js" />
     <Content Include="Js\Ingresar_sitio.js" />
+    <Content Include="Js\Modificar_tipo_moneda.js" />
+    <Content Include="Js\Modificar_tipo_pago.js" />
     <Content Include="Js\Nueva_moneda.js" />
+    <Content Include="Js\Nuevo_tipo_pago.js" />
     <Content Include="Js\Validar_log.js" />
     <Content Include="Js\validar_moneda.js" />
+    <Content Include="Js\validar_pago.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
     <Content Include="Scripts\jquery-3.6.3.slim.js" />
@@ -230,6 +234,9 @@
     <Content Include="Scripts\jquery-3.6.3.min.map" />
     <Content Include="Views\Admin\Ltmonedas.cshtml" />
     <Content Include="Views\Admin\Mtmoneda.cshtml" />
+    <Content Include="Views\Admin\Ltpago.cshtml" />
+    <Content Include="Views\Admin\Dtpago.cshtml" />
+    <Content Include="Views\Admin\Mtpago.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

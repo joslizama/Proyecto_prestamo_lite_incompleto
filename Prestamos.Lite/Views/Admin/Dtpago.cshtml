@@ -1,16 +1,19 @@
-﻿@model Prestamos.Lite.Models.Tipo_moneda
+﻿@model Prestamos.Lite.Models.Tipo_pago
+
 
 @{
+                /**/
 
-        var r = Convert.ToString(Session["rut"]);
-        var t = Convert.ToInt32(Session["tipo"]);
 
-        if (r == null || r == "" || t == null || t != 1)
-        {
+                var r = Convert.ToString(Session["rut"]);
+                var t = Convert.ToInt32(Session["tipo"]);
 
-            Response.Redirect("~/Home/Error");
+                if (r == null || r == "" || t == null || t != 1)
+                {
 
-        }
+                    Response.Redirect("~/Home/Error");
+
+                }
 
 
 
@@ -24,7 +27,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Tipo de monedas</title>
+    <title>Tipo de pagos</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Estilos/Estilo_tab.css">
@@ -38,26 +41,20 @@
     <script src="~/Scripts/jquery-3.6.3.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Js/validar_moneda.js"></script> 
-
-
-
-
-
-
+    <script src="~/Js/validar_pago.js"></script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Tipo de monedas</a>
+            <a class="navbar-brand" href="#">Tipo de pago</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/Admin/Ltmonedas">Volver al listado de tipo de monedas</a>
+                        <a class="nav-link" href="/Admin/Ltpago">Volver al listado tipo pago</a>
                     </li>
 
                     <li class="nav-item active">
@@ -77,34 +74,23 @@
     <br />
 
 
-
-            <form method="post" enctype="multipart/form-data" id="validar_monedas">
-
                 <table align="center" class="border">
 
                     <tr>
-                        <td colspan="4" align="center"><center><h6>Modificar tipo de moneda</h6></center></td>
+                        <td colspan="4" align="center"><center><h6>Detalle tipo de pago</h6></center></td>
                     </tr>
                     <tr>
-                        <td><label for="formGroupExampleInput">Nombre divisa : </label></td>
-                        <td><input type="text" class="form-control" id="nombre" name="nombre" value="@Model.nombre_divisa" required></td>
+                        <td><label for="formGroupExampleInput">Nombre tipo pago : </label></td>
+                        <td><label for="formGroupExampleInput">@Model.nombre </label></td>
                     </tr>
                     <tr>
-                        <td><label for="formGroupExampleInput">Abreviatura : </label></td>
-                        <td><input type="text" class="form-control" id="abreviatura" name="abreviatura" value="@Model.abreviatura" required></td>
+                        <td><label for="formGroupExampleInput">Valor en dias : </label></td>
+                        <td><label for="formGroupExampleInput">@Model.valor_dias </label></td>
                     </tr>
                     <tr>
-                        <td colspan="4" align="center">
-
-                            <button type="submit" name="Modificar" id="Modificar" value="Modificar" class="btn btn-primary">Modificar</button>
-                            &nbsp;
-                            <button type="reset" name="Cancelar" id="Cancelar" value="Cancelar" class="btn btn-danger">Cancelar</button>
-
-                        </td>
-
-
+                        <td><label for="formGroupExampleInput">Descripcion : </label></td>
+                        <td colspan="4" align="center"><label for="formGroupExampleInput">@Model.descripcion </label></td>
                     </tr>
-
 
 
                 </table>
@@ -112,12 +98,9 @@
 
 
 
-            </form>
 
 
 
-
-    
 
 
 
@@ -134,4 +117,4 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<script src="~/Js/Modificar_tipo_moneda.js"></script>
+
