@@ -113,6 +113,7 @@
     <Content Include="Js\Modificar_tipo_pago.js" />
     <Content Include="Js\Nueva_moneda.js" />
     <Content Include="Js\Nuevo_tipo_pago.js" />
+    <Content Include="Js\Validar_Buscar.js" />
     <Content Include="Js\Validar_log.js" />
     <Content Include="Js\validar_moneda.js" />
     <Content Include="Js\validar_pago.js" />
@@ -237,6 +238,9 @@
     <Content Include="Views\Admin\Ltpago.cshtml" />
     <Content Include="Views\Admin\Dtpago.cshtml" />
     <Content Include="Views\Admin\Mtpago.cshtml" />
+    <Content Include="Views\Admin\Lclientes.cshtml" />
+    <Content Include="Views\Admin\Lclientes2.cshtml" />
+    <Content Include="Views\Admin\Dcliente.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

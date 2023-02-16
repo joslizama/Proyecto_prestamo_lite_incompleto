@@ -20,27 +20,27 @@ namespace Prestamos.Lite.Controllers
             return View();
         }
         //Listado de tipo de monedas 
-        public ActionResult Ltmonedas(int?p)
+        public ActionResult Ltmonedas(int? p)
         {
-          int r = 2;
-          int np = p ?? 1;
+            int r = 2;
+            int np = p ?? 1;
 
-          var ltmonedas = dbc.Tipo_moneda.ToList();
+            var ltmonedas = dbc.Tipo_moneda.ToList();
 
             return View(ltmonedas.ToPagedList(np, r));
 
         }
-    //Nueva moneda controlador 
-    [HttpPost] 
-    public JsonResult Ntmonedasc()
-    {
+        //Nueva moneda controlador 
+        [HttpPost]
+        public JsonResult Ntmonedasc()
+        {
             var nombre = Convert.ToString(Request.Form["nombre"]);
             var abreviatura = Convert.ToString(Request.Form["abreviatura"]);
 
             Tipo_moneda tm = new Tipo_moneda
             {
-                nombre_divisa=nombre,
-                abreviatura=abreviatura
+                nombre_divisa = nombre,
+                abreviatura = abreviatura
             };
 
             dbc.Tipo_moneda.Add(tm);
@@ -48,50 +48,56 @@ namespace Prestamos.Lite.Controllers
 
             return Json(JsonRequestBehavior.AllowGet);
 
-    } 
-   //Modificar tipo de moneda vista
-    public ActionResult Mtmoneda(int id)
-    {
-      if(id == null)
-      {
-        return RedirectToAction("Error_admin", "Admin");
-
-      }else{
-
-       var tmoneda = dbc.Tipo_moneda.Find(id);
-
-       TempData["tipo_moneda"] = Convert.ToInt32(tmoneda.id);
-
-
-        if(tmoneda == null)
-        {
-         return RedirectToAction("Error_admin", "Admin");
-
-        }else{
-
-          return View(tmoneda);
-
-
-
         }
-      }
-    } 
-   //Modificar tipo de monedas controlador 
-   [HttpPost] 
-    public JsonResult Mtmonedac()
-    {
+        //Modificar tipo de moneda vista
+        public ActionResult Mtmoneda(int id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error_admin", "Admin");
 
-       var i = Convert.ToInt32(TempData["tipo_moneda"]);
-       var nombre = Convert.ToString(Request.Form["nombre"]);
-       var abreviatura = Convert.ToString(Request.Form["abreviatura"]);
+            }
+            else
+            {
+
+                var tmoneda = dbc.Tipo_moneda.Find(id);
+
+                TempData["tipo_moneda"] = Convert.ToInt32(tmoneda.id);
 
 
-       var c = dbc.Tipo_moneda.Where(p => p.id == i).SingleOrDefault();
+                if (tmoneda == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
 
-       if(c == null)
-       {
-           Response.Redirect("~/Admin/Error_admin");
-       }else{
+                }
+                else
+                {
+
+                    return View(tmoneda);
+
+
+
+                }
+            }
+        }
+        //Modificar tipo de monedas controlador 
+        [HttpPost]
+        public JsonResult Mtmonedac()
+        {
+
+            var i = Convert.ToInt32(TempData["tipo_moneda"]);
+            var nombre = Convert.ToString(Request.Form["nombre"]);
+            var abreviatura = Convert.ToString(Request.Form["abreviatura"]);
+
+
+            var c = dbc.Tipo_moneda.Where(p => p.id == i).SingleOrDefault();
+
+            if (c == null)
+            {
+                Response.Redirect("~/Admin/Error_admin");
+            }
+            else
+            {
 
                 c.nombre_divisa = nombre;
                 c.abreviatura = abreviatura;
@@ -100,72 +106,78 @@ namespace Prestamos.Lite.Controllers
 
                 return Json(JsonRequestBehavior.AllowGet);
 
-       }
+            }
             return Json(JsonRequestBehavior.AllowGet);
-    }
-    //Eliminar tipo de moneda 
-    public ActionResult Etmoneda(int id)
-    {
-    
-     if(id == null)
-     {
-        return RedirectToAction("Error_admin", "Admin");
-
-     }else{
-
-      var etmoneda = dbc.Tipo_moneda.Find(id);
-      var etmoneda2 = Convert.ToInt32(etmoneda.id);
-
-
-      if(etmoneda == null||etmoneda2 == null)
-      {
-        return RedirectToAction("Error_admin", "Admin");
-
-      }else{
-
-
-        var c = dbc.Prestamoes.Where(p => p.tipo_moneda_id == etmoneda2).SingleOrDefault();
-
-        if (c != null)
+        }
+        //Eliminar tipo de moneda 
+        public ActionResult Etmoneda(int id)
         {
-           c.tipo_moneda_id = 1;
-           dbc.SaveChanges();
 
-           dbc.Tipo_moneda.Remove(etmoneda);
-           dbc.SaveChanges();
+            if (id == null)
+            {
+                return RedirectToAction("Error_admin", "Admin");
 
-           return RedirectToAction("Ltmonedas", "Admin");
+            }
+            else
+            {
 
-
-
-        }else{
-
-         dbc.Tipo_moneda.Remove(etmoneda);
-         dbc.SaveChanges();
-
-         return RedirectToAction("Ltmonedas", "Admin");
+                var etmoneda = dbc.Tipo_moneda.Find(id);
+                var etmoneda2 = Convert.ToInt32(etmoneda.id);
 
 
+                if (etmoneda == null || etmoneda2 == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
+
+                }
+                else
+                {
+
+
+                    var c = dbc.Prestamoes.Where(p => p.tipo_moneda_id == etmoneda2).SingleOrDefault();
+
+                    if (c != null)
+                    {
+                        c.tipo_moneda_id = 1;
+                        dbc.SaveChanges();
+
+                        dbc.Tipo_moneda.Remove(etmoneda);
+                        dbc.SaveChanges();
+
+                        return RedirectToAction("Ltmonedas", "Admin");
+
+
+
+                    }
+                    else
+                    {
+
+                        dbc.Tipo_moneda.Remove(etmoneda);
+                        dbc.SaveChanges();
+
+                        return RedirectToAction("Ltmonedas", "Admin");
+
+
+
+                    }
+                }
+            }
+        }
+        //Listado de tipo de pagos 
+        public ActionResult Ltpago(int? p)
+        {
+            int r = 3;
+            int np = p ?? 1;
+
+            var ltpago = dbc.Tipo_pago.ToList();
+
+            return View(ltpago.ToPagedList(np, r));
 
         }
-      }
-     }
-    } 
-    //Listado de tipo de pagos 
-    public ActionResult Ltpago(int? p)
-    {
-      int r = 3;
-      int np = p ?? 1;
-
-      var ltpago = dbc.Tipo_pago.ToList();
-
-      return View(ltpago.ToPagedList(np, r));
-
-    } 
-    //Nuevo tipo de pago controlador 
-    [HttpPost] 
-    public JsonResult Ntipopagoc()
-    {
+        //Nuevo tipo de pago controlador 
+        [HttpPost]
+        public JsonResult Ntipopagoc()
+        {
             var nombre_tpago = Convert.ToString(Request.Form["nombre_tpago"]);
             var descripcion = Convert.ToString(Request.Form["descripcion"]);
             var valor = Convert.ToInt32(Request.Form["valor"]);
@@ -173,8 +185,8 @@ namespace Prestamos.Lite.Controllers
 
             Tipo_pago tp = new Tipo_pago
             {
-                nombre=nombre_tpago,
-                descripcion=descripcion,
+                nombre = nombre_tpago,
+                descripcion = descripcion,
                 valor_dias = valor
             };
             dbc.Tipo_pago.Add(tp);
@@ -182,69 +194,79 @@ namespace Prestamos.Lite.Controllers
 
             return Json(JsonRequestBehavior.AllowGet);
 
-    }
-   //Detalles tipo de pagos 
-   public ActionResult Dtpago(int id)
-   {
-     if(id == null)
-     {
-       return RedirectToAction("Error_admin", "Admin");
+        }
+        //Detalles tipo de pagos 
+        public ActionResult Dtpago(int id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error_admin", "Admin");
 
-     }else{
+            }
+            else
+            {
 
-      var dtpago = dbc.Tipo_pago.Find(id);
+                var dtpago = dbc.Tipo_pago.Find(id);
 
-      if(dtpago == null)
-      {
-       return RedirectToAction("Error_admin", "Admin");
-      }else{
+                if (dtpago == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
+                }
+                else
+                {
 
-        return View(dtpago);
+                    return View(dtpago);
 
-      }
-     }
-   } 
-  //Modificar tipo de pago vista 
-   public ActionResult Mtpago(int id)
-   {
-     if(id == null)
-     {
-       return RedirectToAction("Error_admin", "Admin");
+                }
+            }
+        }
+        //Modificar tipo de pago vista 
+        public ActionResult Mtpago(int id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error_admin", "Admin");
 
-     }else{
+            }
+            else
+            {
 
-      var mtpago = dbc.Tipo_pago.Find(id);
-      TempData["mtpago"] = Convert.ToInt32(mtpago.id);
+                var mtpago = dbc.Tipo_pago.Find(id);
+                TempData["mtpago"] = Convert.ToInt32(mtpago.id);
 
-      if(mtpago == null)
-      {
-       return RedirectToAction("Error_admin", "Admin");
+                if (mtpago == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
 
-      }else{
+                }
+                else
+                {
 
-       return View(mtpago);
-      }
-    }
-   }
-  //Modificar tipo de pago controlado 
-   [HttpPost] 
-   public JsonResult Mtpagoc()
-   {
-      var i = Convert.ToInt32(TempData["mtpago"]);
+                    return View(mtpago);
+                }
+            }
+        }
+        //Modificar tipo de pago controlado 
+        [HttpPost]
+        public JsonResult Mtpagoc()
+        {
+            var i = Convert.ToInt32(TempData["mtpago"]);
 
-     var nombre_tpago = Convert.ToString(Request.Form["nombre_tpago"]);
-     var descripcion = Convert.ToString(Request.Form["descripcion"]);
-     var valor = Convert.ToInt32(Request.Form["valor"]);
+            var nombre_tpago = Convert.ToString(Request.Form["nombre_tpago"]);
+            var descripcion = Convert.ToString(Request.Form["descripcion"]);
+            var valor = Convert.ToInt32(Request.Form["valor"]);
 
-      var c = dbc.Tipo_pago.Where(p => p.id == i).SingleOrDefault();
+            var c = dbc.Tipo_pago.Where(p => p.id == i).SingleOrDefault();
 
-       if(c == null)
-       {
+            if (c == null)
+            {
 
-         Response.Redirect("~/Admin/Error_admin");
+                Response.Redirect("~/Admin/Error_admin");
 
 
-       }else{
+            }
+            else
+            {
 
 
 
@@ -259,50 +281,166 @@ namespace Prestamos.Lite.Controllers
 
 
 
-     }
+            }
             return Json(JsonRequestBehavior.AllowGet);
-   }
-   //Eliminar tipo de pago 
-   public ActionResult Etpago(int id)
-   {
-    if(id == null)
+        }
+        //Eliminar tipo de pago 
+        public ActionResult Etpago(int id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("Error_admin", "Admin");
+
+            }
+            else
+            {
+
+                var etpago = dbc.Tipo_pago.Find(id);
+                var etpago2 = Convert.ToInt32(etpago.id);
+
+                var c = dbc.Prestamoes.Where(p => p.tipo_pago_id == etpago2).SingleOrDefault();
+
+                if (c != null)
+                {
+                    c.tipo_pago_id = 1;
+                    dbc.SaveChanges();
+
+                    dbc.Tipo_pago.Remove(etpago);
+
+                    dbc.SaveChanges();
+
+                    return RedirectToAction("Ltpago", "Admin");
+
+
+                }
+                else
+                {
+
+                    dbc.Tipo_pago.Remove(etpago);
+
+                    dbc.SaveChanges();
+
+                    return RedirectToAction("Ltpago", "Admin");
+
+
+
+
+                }
+            }
+        }
+        //Listado de clientes 
+        public ActionResult Lclientes(int? p)
+        {
+            TempData["ltipo"] = dbc.tipo_usuario.ToList();
+            int r = 4;
+            int np = p ?? 1;
+
+            var lc = dbc.Clientes.ToList();
+
+
+            return View(lc.ToPagedList(np, r));
+
+        }
+        //Listado de clientes filtrado
+        public ActionResult Lclientes2(int?p)
+        {
+            TempData["ltipo"] = dbc.tipo_usuario.ToList();
+
+            var tipo = Convert.ToInt32(Request.Form["tipo"]);
+
+            int r = 4;
+            int np = p ?? 1;
+
+            if (tipo == 2)
+            {
+
+                var c = dbc.Usuarios.Where(x => x.tipo_id == tipo).SingleOrDefault();
+
+                if (c == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
+
+                }
+                else
+                {
+
+                    var idusuario = Convert.ToString(c.cliente_id);
+
+                    var lcajeros = dbc.Clientes.Where(x => x.rut.Equals(idusuario)).ToList();
+
+
+                    return View(lcajeros.ToPagedList(np,r));
+
+
+                }
+
+            }
+            else if (tipo == 3){
+
+
+                var c = dbc.Usuarios.Where(x => x.tipo_id == tipo).SingleOrDefault();
+
+                if (c == null)
+                {
+                    return RedirectToAction("Error_admin", "Admin");
+
+                }
+                else
+                {
+
+                    var idusuario = Convert.ToString(c.cliente_id);
+
+                    var lcliente = dbc.Clientes.Where(x => x.rut.Equals(idusuario)).ToList();
+
+
+                    return View(lcliente.ToPagedList(np,r));
+
+
+
+
+
+
+                }
+
+                
+
+
+            }
+            else if (tipo == 1)
+            {
+
+                return RedirectToAction("Lclientes", "Admin");
+
+            }
+
+            
+                return View();
+
+        }
+    //Detalle del cliente 
+    public ActionResult Dcliente(string id)
     {
-      return RedirectToAction("Error_admin", "Admin");
 
-    }else{
+      if(id == null)
+      {
+       return RedirectToAction("Error_admin", "Admin");
 
-     var etpago = dbc.Tipo_pago.Find(id);
-     var etpago2 = Convert.ToInt32(etpago.id);
+      }else{
 
-     var c = dbc.Prestamoes.Where(p => p.tipo_pago_id == etpago2).SingleOrDefault();
+       var dcliente = dbc.Clientes.Find(id);
 
-     if (c != null)
-     {
-        c.tipo_pago_id = 1;
-        dbc.SaveChanges();
+       if(dcliente == null)
+       {
+        return RedirectToAction("Error_admin", "Admin");
 
-        dbc.Tipo_pago.Remove(etpago);
+       }else{
 
-        dbc.SaveChanges();
-
-        return RedirectToAction("Ltpago", "Admin");
-
-
-     }else{
-
-        dbc.Tipo_pago.Remove(etpago);
-
-        dbc.SaveChanges();
-
-        return RedirectToAction("Ltpago", "Admin");
-
-
-
+        return View(dcliente);
 
        }
-     } 
-   } 
-  //
+      }
+    }
+    //
 
 
     }
