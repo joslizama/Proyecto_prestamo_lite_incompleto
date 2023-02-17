@@ -144,8 +144,11 @@
                         <td>@i.apellido</td>
                         <td>
                             <a href="@Url.Action("Dcliente","Admin",new {id=i.rut }) " class="btn btn-outline-success"><i class='bx bx-detail'></i></a>
+                            /
+                            <a href="@Url.Action("Dusuario","Admin",new {id=i.rut }) " class="btn btn-outline-info"><i class='bx bx-message-alt-error'></i></a>
+
                             @*/
-                                <a href="@Url.Action("Mtpago","Admin",new {id=i.id }) " class="btn btn-outline-warning"><i class='bx bx-edit'></i></a>*@
+        <a href="@Url.Action("Mtpago","Admin",new {id=i.id }) " class="btn btn-outline-warning"><i class='bx bx-edit'></i></a>*@
                             /
                             <a href="@Url.Action("Ecliente","Admin",new {id=i.rut })" class="btn btn-outline-danger"><i class='bx bx-trash'></i></a>
                         </td>

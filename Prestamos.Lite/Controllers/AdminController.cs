@@ -440,6 +440,121 @@ namespace Prestamos.Lite.Controllers
        }
       }
     }
+    //Nuevo cajero vista 
+    public ActionResult Ncajero()
+    {
+      return View();
+    } 
+   //Nuevo cajero controlador 
+   [HttpPost]
+    public JsonResult Ncajeroc()
+    {
+            var rut =Convert.ToString(Request.Form["rut"]);
+            var fecha = Convert.ToDateTime(Request.Form["fecha"]);
+            var nombre = Convert.ToString(Request.Form["nombre"]);
+            var apellido = Convert.ToString(Request.Form["apellido"]);
+            var direccion = Convert.ToString(Request.Form["direccion"]);
+            var comuna = Convert.ToString(Request.Form["comuna"]);
+            var ciudad =Convert.ToString(Request.Form["ciudad"]);
+            var correo = Convert.ToString(Request.Form["correo"]);
+            var telefono = Convert.ToString(Request.Form["telefono"]);
+            var contraseña =Convert.ToString(Request.Form["contraseña"]);
+
+
+            Cliente c = new Cliente
+            {
+                rut=rut,
+                fecha_nacimiento=fecha,
+                nombre=nombre,
+                apellido=apellido,
+                direccion=direccion,
+                comuna=comuna,
+                ciudad=ciudad,
+                correo=correo,
+                telefono=telefono
+            };
+            dbc.Clientes.Add(c);
+            dbc.SaveChanges();
+
+            Usuario us = new Usuario
+            {
+                cliente_id=rut,
+                contraseña=contraseña,
+                tipo_id=2
+            };
+            dbc.Usuarios.Add(us);
+            dbc.SaveChanges();
+
+
+            return Json(JsonRequestBehavior.AllowGet);
+
+
+    }
+    //Eliminar cliente y cajero 
+     public ActionResult Ecliente(string id)
+     {
+        if(id == null)
+        {
+          return RedirectToAction("Error_admin", "Admin");
+
+        }else{
+
+          var ecliente = dbc.Clientes.Find(id);
+          var ec = Convert.ToString(ecliente.rut);
+
+          //Obtener la id del usuario 
+
+          var i = dbc.Usuarios.Where(p => p.cliente_id.Equals(ec)).SingleOrDefault();
+          var i2 = Convert.ToInt32(i.id);
+          var i3 = dbc.Usuarios.Find(i2);
+          if(i == null)
+          {
+             return RedirectToAction("Error_admin", "Admin");
+
+          }else{
+
+                    //Eliminar cliente y cajero 
+                    //Eliminar usuario
+
+                    dbc.Clientes.Remove(ecliente);
+                    dbc.SaveChanges();
+
+                    dbc.Usuarios.Remove(i3);
+                    dbc.SaveChanges();
+
+                    return RedirectToAction("Lclientes", "Admin");
+                    
+
+
+          }
+
+        }
+     } 
+    //Detalle del usuario 
+     public ActionResult Dusuario(string id)
+     {
+       if(id == null)
+       {
+        return RedirectToAction("Error_admin", "Admin");
+
+       }else{
+
+        var dc = dbc.Clientes.Find(id);
+        var dc2 = Convert.ToString(dc.rut);
+
+        if (dc == null)
+        {
+          return RedirectToAction("Error_admin", "Admin");
+        }else{
+
+          var c = dbc.Usuarios.Where(p => p.cliente_id.Equals(dc2)).SingleOrDefault();
+
+
+                    return View();
+
+        }
+      }
+    } 
     //
 
 

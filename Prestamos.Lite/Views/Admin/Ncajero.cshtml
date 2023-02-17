@@ -1,0 +1,171 @@
+﻿@{
+    /**/
+
+
+    var r = Convert.ToString(Session["rut"]);
+    var t = Convert.ToInt32(Session["tipo"]);
+
+    if (r == null || r == "" || t == null || t != 1)
+    {
+
+        Response.Redirect("~/Home/Error");
+
+    }
+
+
+
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Usuarios</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Estilos/Estilo_tab.css">
+    <style>
+
+        label.error {
+            color: red;
+        }
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="~/Scripts/jquery-3.6.3.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Js/validar_usuario.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Usuarios</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Lclientes">Volver al listado de usuarios</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Index_admin">Volver al inicio</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Csesion">Cerrar sesion</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <!--Tabs-->
+    <br />
+
+    <form method="post" enctype="multipart/form-data" id="validar_usuarios">
+
+        <table align="center" class="border">
+
+            <tr>
+                <td colspan="4" align="center"><center><h6>Nuevo cajero</h6></center></td>
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Rut : </label></td>
+                <td><input type="text" class="form-control" id="rut" name="rut" required></td>
+                <td><label for="formGroupExampleInput">Fecha de nacimiento : </label></td>
+                <td colspan="2" align="center"><input type="date" class="form-control" id="fecha" name="fecha" required></td>
+
+
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Nombre : </label></td>
+                <td><input type="text" class="form-control" id="nombre" name="nombre" required></td>
+                <td><label for="formGroupExampleInput">Apellido : </label></td>
+                <td colspan="2" align="center"><input type="text" class="form-control" id="apellido" name="apellido" required></td>
+
+
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Comuna : </label></td>
+                <td><input type="text" class="form-control" id="comuna" name="comuna" required></td>
+
+                <td><label for="formGroupExampleInput">Direccion : </label></td>
+                <td colspan="2" align="center"><textarea class="form-control" id="direccion" name="direccion" rows="3"></textarea></td>
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Ciudad : </label></td>
+                <td><input type="text" class="form-control" id="ciudad" name="ciudad" required></td>
+
+                <td><label for="formGroupExampleInput">Correo : </label></td>
+                <td colspan="2" align="center"><input type="email" class="form-control" id="correo" name="correo" required></td>
+
+
+
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Telefono : </label></td>
+                <td><input type="text" class="form-control" id="telefono" name="telefono" required></td>
+                <td><label for="formGroupExampleInput">Contraseña : </label></td>
+                <td colspan="2" align="center"><input type="password" class="form-control" id="contraseña" name="contraseña" required></td>
+
+            </tr>
+
+
+
+            <tr>
+                <td colspan="4" align="center">
+
+                    <button type="submit" name="Nuevo" id="Nuevo" value="Nuevo" class="btn btn-primary">Nuevo</button>
+                    &nbsp;
+                    <button type="reset" name="Cancelar" id="Cancelar" value="Cancelar" class="btn btn-danger">Cancelar</button>
+
+                </td>
+
+
+            </tr>
+
+
+
+        </table>
+
+
+
+
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.slim.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script src="~/Js/Nuevo_cajero.js"></script>
