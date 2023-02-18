@@ -549,14 +549,42 @@ namespace Prestamos.Lite.Controllers
 
           var c = dbc.Usuarios.Where(p => p.cliente_id.Equals(dc2)).SingleOrDefault();
 
+          var c2 = Convert.ToInt32(c.id);
 
-                    return View();
+          var usuario = dbc.Usuarios.Find(c2);
 
+
+         if(usuario == null)
+         {
+          return RedirectToAction("Error_admin", "Admin");
+         }else{
+
+
+          return View(usuario);
+
+
+         }      
         }
       }
     } 
-    //
+    //Listado de prestamos 
+    public ActionResult Lprestamos(int?p)
+    {
 
+     TempData["lpagos"] = dbc.Tipo_pago.ToList();
+
+
+
+     int r = 4;
+     int np = p ?? 1;
+
+     var lp = dbc.Prestamoes.ToList();
+
+     return View(lp.ToPagedList(np, r));
+
+    } 
+   //
+   
 
     }
 }
