@@ -583,8 +583,150 @@ namespace Prestamos.Lite.Controllers
      return View(lp.ToPagedList(np, r));
 
     } 
+   //Detalle del prestamo vista 
+    public ActionResult Dprestamos(int id)
+    {
+
+     if(id  == null)
+     {
+       return RedirectToAction("Error_admin", "Admin");
+
+     }else{
+
+       var dp = dbc.Prestamoes.Find(id);
+       TempData["lpago"] = dbc.Tipo_pago;
+       TempData["lmoneda"] = dbc.Tipo_moneda;
+       TempData["lcliente"] = dbc.Clientes.ToList();
+
+
+       if(dp == null)
+       {
+        return RedirectToAction("Error_admin", "Admin");
+
+       }else{
+
+        return View(dp);
+       }
+     }
+    } 
+   //Filtar los prestamos 
+   [HttpPost] 
+   public ActionResult LPrestamos2(int?p)
+   {
+        var fecha = Convert.ToString(Request.Form["fecha"]);
+        var estados = Convert.ToString(Request.Form["estados"]);
+
+            TempData["lpagos"] = dbc.Tipo_pago.ToList();
+
+            int r = 4;
+            int np = p ?? 1;
+
+
+            if (fecha.Equals("Reciente"))
+            {
+
+                if (estados.Equals("Pagado"))
+                {
+
+
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM(SELECT * FROM Prestamo WHERE estado_prestamo = '" + estados + "') Prestamo ORDER BY fecha_registro_prestamo ASC ").ToList();
+
+
+                    return View(c.ToPagedList(np, r));
+
+
+                }else if (estados.Equals("Cancelado"))
+                {
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM(SELECT * FROM Prestamo WHERE estado_prestamo = '" + estados + "') Prestamo ORDER BY fecha_registro_prestamo ASC ").ToList();
+
+                    return View(c.ToPagedList(np, r));
+                    
+                }
+                else if(estados == null)
+                {
+
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM Prestamo ORDER BY fecha_registro_prestamo ASC").ToList();
+
+                    return View(c.ToPagedList(np, r));
+
+
+
+
+
+
+                }
+
+
+
+
+            }
+            else if (fecha.Equals("Antiguas"))
+            {
+
+
+                if (estados.Equals("Pagado"))
+                {
+
+
+
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM(SELECT * FROM Prestamo WHERE estado_prestamo = " + estados +  ") Prestamo ORDER BY fecha_registro_prestamo DESC").ToList();
+
+                    return View(c.ToPagedList(np, r));
+
+
+
+
+
+
+
+
+                }
+                else if (estados.Equals("Cancelado"))
+                {
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM(SELECT * FROM Prestamo WHERE estado_prestamo = " + estados + ") Prestamo ORDER BY fecha_registro_prestamo DESC").ToList();
+
+                    return View(c.ToPagedList(np, r));
+
+                }
+                else if (estados == null)
+                {
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM Prestamo ORDER BY fecha_registro_prestamo DESC").ToList();
+
+                    return View(c.ToPagedList(np, r));
+
+                }
+
+
+
+
+            }
+            else if (fecha == null){
+
+
+                if (estados.Equals("Pagado"))
+                {
+
+                }
+                else if (estados.Equals("Cancelado"))
+                {
+
+                }
+                else if (estados == null)
+                {
+
+                }
+
+
+
+
+            }
+
+            return View();
+
+        } 
    //
-   
+
+
 
     }
 }
