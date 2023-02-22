@@ -1,0 +1,201 @@
+﻿
+@{
+    /**/
+
+
+    var r = Convert.ToString(Session["rut"]);
+    var t = Convert.ToInt32(Session["tipo"]);
+
+    if (r == null || r == "" || t == null || t != 1)
+    {
+
+        Response.Redirect("~/Home/Error");
+
+    }
+
+
+
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Prestamos</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Estilos/Estilo_tab.css">
+    <style>
+
+        label.error {
+            color: red;
+        }
+
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="~/Scripts/jquery-3.6.3.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Js/Validar_prestamo.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Prestamos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Lprestamos">Volver al listado de prestamos</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Index_admin">Volver al inicio</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Csesion">Cerrar sesion</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <!--Tabs-->
+    <br />
+    <form method="post" enctype="multipart/form-data" id="Validar_prestamos">
+        <table align="center" class="border">
+
+            <tr>
+                <td colspan="4" align="center"><center><h6>Nuevo prestamo</h6></center></td>
+            </tr>
+
+            <tr>
+                <td><label for="formGroupExampleInput">Tipo de moneda del prestamo : </label></td>
+                <td>
+
+
+
+                    <select class="form-control" id="tmoneda" name="tmoneda" required>
+                        <option value="null">Seleccione</option>
+                        @foreach (var i in TempData["lmoneda"] as List<Prestamos.Lite.Models.Tipo_moneda>)
+                        {
+                            <option value="@i.id">@i.nombre_divisa</option>
+                        }
+
+                    </select>
+
+                </td>
+
+                <td><label for="formGroupExampleInput">Tipo de pago prestamo : </label></td>
+                <td>
+                    <select class="form-control" id="tpago" name="tpago" required>
+                        <option value="null">Seleccione</option>
+                        @foreach (var i in TempData["lpago"] as List<Prestamos.Lite.Models.Tipo_pago>)
+                        {
+                            <option value="@i.id">@i.nombre</option>
+                        }
+                    </select>
+
+                </td>
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Monto del prestamo : </label></td>
+                <td><input type="text" class="form-control" id="monto" name="monto" required></td>
+                <td><label for="formGroupExampleInput">Numero de cuotas : </label></td>
+                <td><input type="text" class="form-control" id="cuotas" name="cuotas" required></td>
+
+
+
+            </tr>
+
+
+            <tr>
+                <td><label for="formGroupExampleInput">Fecha de inicio del pago : </label></td>
+                <td><input type="date" class="form-control" id="fechainicio" name="fechainicio" required></td>
+                <td><label for="formGroupExampleInput">Fecha fin del pago : </label></td>
+                <td><input type="date" class="form-control" id="fechafin" name="fechafin" required></td>
+
+
+
+            </tr>
+
+            <tr>
+                <td><label for="formGroupExampleInput">Interes : </label></td>
+                <td><input type="text" class="form-control" id="interes" name="interes" value="0.19" disabled></td>
+                <td><label for="formGroupExampleInput">Monto de cuotas sin interes : </label></td>
+                <td><input type="text" class="form-control" id="mcuotassininteres" name="mcuotassininteres" required></td>
+
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Monto de cuotas con interes : </label></td>
+                <td><input type="text" class="form-control" id="mcuotasconinteres" name="mcuotasconinteres" disabled required></td>
+                <td><label for="formGroupExampleInput">Total del prestamo : </label></td>
+                <td><input type="text" class="form-control" id="total" name="total" disabled required></td>
+
+
+            </tr>
+            <tr>
+                <td><label for="formGroupExampleInput">Rut cliente : </label></td>
+                <td><input type="text" class="form-control" id="rcliente" name="rcliente" required></td>
+                <td><label for="formGroupExampleInput">Clausulas : </label></td>
+                <td><textarea class="form-control" id="clausulas" name="clausulas" rows="3" required></textarea></td>
+
+
+            </tr>
+            <tr>
+                <td colspan="4" align="center">
+
+                    <button type="submit" name="Nuevo" id="Nuevo" value="Nuevo" class="btn btn-primary">Nuevo</button>
+                    &nbsp;
+                    <button type="reset" name="Cancelar" id="Cancelar" value="Cancelar" class="btn btn-danger">Cancelar</button>
+
+                </td>
+
+
+            </tr>
+
+
+
+
+        </table>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.slim.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

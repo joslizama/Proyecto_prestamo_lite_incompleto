@@ -118,6 +118,7 @@
     <Content Include="Js\Validar_log.js" />
     <Content Include="Js\validar_moneda.js" />
     <Content Include="Js\validar_pago.js" />
+    <Content Include="Js\Validar_prestamo.js" />
     <Content Include="Js\validar_usuario.js" />
     <Content Include="Scripts\jquery-3.6.3.js" />
     <Content Include="Scripts\jquery-3.6.3.min.js" />
@@ -247,6 +248,8 @@
     <Content Include="Views\Admin\Dusuario.cshtml" />
     <Content Include="Views\Admin\Lprestamos.cshtml" />
     <Content Include="Views\Admin\Dprestamos.cshtml" />
+    <Content Include="Views\Admin\LPrestamos2.cshtml" />
+    <Content Include="Views\Admin\Nprestamos.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

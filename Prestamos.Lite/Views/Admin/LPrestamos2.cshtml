@@ -38,16 +38,14 @@
         label.error {
             color: red;
         }
-        estado{
 
-            color:green;
-        }
-        estado2{
-
-            color:red;
+        estado {
+            color: green;
         }
 
-
+        estado2 {
+            color: red;
+        }
     </style>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <script src="~/Scripts/jquery-3.6.3.js"></script>
@@ -98,8 +96,6 @@
                         </select>
 
 
-
-
                     </td>
                     /
 
@@ -117,6 +113,8 @@
 
 
 
+
+
                     <td>
                         <button type="submit" name="Buscar" id="Buscar" value="Buscar" class="btn btn-primary">Buscar</button>
                         /
@@ -125,7 +123,7 @@
                 </tr>
             </table>
         </form>
-    </div> 
+    </div>
 
     <br />
     <table class="table table-sm" align="center">
@@ -150,79 +148,69 @@
 
             @foreach (var i in Model)
             {
-            <tr>
-                <td><label>@i.numero_operacion</label></td>
-                <td><label>@i.fecha_registro_prestamo</label></td>
-                <td><label>@i.monto_prestamo</label></td>
-                <td>
+                <tr>
+                    <td><label>@i.numero_operacion</label></td>
+                    <td><label>@i.fecha_registro_prestamo</label></td>
+                    <td><label>@i.monto_prestamo</label></td>
+                    <td>
 
-                    @foreach (var j in TempData["lpagos"] as List<Prestamos.Lite.Models.Tipo_pago>)
-                    {
-                        var idpago = Convert.ToInt32(i.tipo_pago_id);
-
-                        if (idpago == j.id)
+                        @foreach (var j in TempData["lpagos"] as List<Prestamos.Lite.Models.Tipo_pago>)
                         {
+                            var idpago = Convert.ToInt32(i.tipo_pago_id);
 
-                            <label>@j.nombre</label>
+                            if (idpago == j.id)
+                            {
+
+                                <label>@j.nombre</label>
+                            }
+
+
+
                         }
+
+                    </td>
+                    @if (i.estado_prestamo.Equals("Pagado"))
+                    {
+                        <td id="estado">@i.estado_prestamo</td>
 
 
 
                     }
+                    else if (i.estado_prestamo.Equals("Cancelado"))
+                    {
 
-                </td>
-                @if (i.estado_prestamo.Equals("Pagado"))
-                {
-                    <td id="estado">@i.estado_prestamo</td>
-
+                        <td id="estado2">@i.estado_prestamo</td>
 
 
-                }
-                else if (i.estado_prestamo.Equals("Cancelado"))
-                {
-
-                    <td id="estado2">@i.estado_prestamo</td>
-
-
-                }
-                else if(i.estado_prestamo.Equals("En proceso"))
-                {
-                    <td >@i.estado_prestamo</td>
+                    }
+                    else if (i.estado_prestamo.Equals("En proceso"))
+                    {
+                        <td>@i.estado_prestamo</td>
 
 
-                }
+                    }
 
-            </tr>
+                </tr>
                 <tr>
                     <td>
                         <a href="@Url.Action("Dprestamos","Admin",new {id=i.numero_operacion })" class="btn btn-outline-secondary"><i class='bx bx-detail'></i></a>
                         /
                         <a href="@Url.Action("Lcuotas","Admin",new {id=i.numero_operacion })" class="btn btn-outline-dark"><i class='bx bx-list-ul'></i></a>
                         /
-                        @*<a></a>
-                        /*@
                         <a href="@Url.Action("Cprestamo","Admin",new {id=i.numero_operacion })" class="btn btn-outline-danger"><i class='bx bx-trash'></i></a>
                     </td>
 
                 </tr>
-                
+
 
 
             }
 
 
-
-
-
-
-
-
-
-
         </tbody>
     </table>
 
-    @Html.PagedListPager(Model, p => Url.Action("Lprestamos", new { p, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    @Html.PagedListPager(Model, p => Url.Action("Lprestamos2", new { p, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 
 
 
@@ -234,8 +222,7 @@
 </html>
 <script>
 
-    function Mensaje()
-    {
+    function Mensaje() {
         alert("No se puede alterar este campo");
     }
 

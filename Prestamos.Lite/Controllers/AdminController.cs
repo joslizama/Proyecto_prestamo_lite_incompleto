@@ -705,26 +705,43 @@ namespace Prestamos.Lite.Controllers
 
                 if (estados.Equals("Pagado"))
                 {
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM Prestamo WHERE estado_prestamo='" + estados + "'").ToList();
+
+                    return View(c.ToPagedList(np, r));
 
                 }
                 else if (estados.Equals("Cancelado"))
                 {
+                    var c = dbc.Prestamoes.SqlQuery("SELECT * FROM Prestamo WHERE estado_prestamo='" + estados + "'").ToList();
+
+                    return View(c.ToPagedList(np, r));
 
                 }
                 else if (estados == null)
                 {
 
+                    return RedirectToAction("Lprestamos", "Admin");
+
                 }
-
-
-
-
+                
             }
 
             return View();
 
         } 
+   //Nuevo prestamo vista 
+
+    public ActionResult Nprestamos()
+    {
+      TempData["lpago"] = dbc.Tipo_pago.ToList();
+      TempData["lmoneda"] = dbc.Tipo_moneda.ToList();
+
+      return View();
+
+    }
    //
+
+
 
 
 
