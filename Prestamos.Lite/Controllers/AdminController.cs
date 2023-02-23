@@ -739,6 +739,27 @@ namespace Prestamos.Lite.Controllers
       return View();
 
     }
+   //Nuevo prestamos controlador
+   [HttpPost]
+    public JsonResult Nprestamosc()
+    {
+            var tmoneda = Convert.ToInt32(Request.Form["tmoneda"]);
+            var tpago = Convert.ToInt32(Request.Form["tpago"]);
+            var monto = Convert.ToDouble(Request.Form["monto"]);
+            var cuotas = Convert.ToInt32(Request.Form["cuotas"]);
+            var fechainicio = Convert.ToDateTime(Request.Form["fechainicio"]);
+            var fechafin = Convert.ToDateTime(Request.Form["fechafin"]);
+            var interes = Convert.ToDouble(Request.Form["interes"]);
+            var mcuotassininteres = Convert.ToDouble(Request.Form["mcuotassininteres"]);
+            var mcuotasconinteres = Convert.ToDouble(Request.Form["mcuotasconinteres"]);
+            var total = Convert.ToDouble(Request.Form["total"]);
+            var rcliente = Convert.ToString(Request.Form["rcliente"]);
+            var clausulas = Convert.ToString(Request.Form["clausulas"]);
+
+
+            return Json(JsonRequestBehavior.AllowGet);
+
+    }
    //
 
 

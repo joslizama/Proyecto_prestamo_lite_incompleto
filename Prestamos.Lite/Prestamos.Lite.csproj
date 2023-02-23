@@ -108,6 +108,7 @@
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.6.3.intellisense.js" />
     <Content Include="Js\Evento.js" />
+    <Content Include="Js\Evento_prestamo.js" />
     <Content Include="Js\Ingresar_sitio.js" />
     <Content Include="Js\Modificar_tipo_moneda.js" />
     <Content Include="Js\Modificar_tipo_pago.js" />

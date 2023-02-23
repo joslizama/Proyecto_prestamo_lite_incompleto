@@ -1,7 +1,6 @@
 ﻿
 @{
-    /**/
-
+    
 
     var r = Convert.ToString(Session["rut"]);
     var t = Convert.ToInt32(Session["tipo"]);
@@ -124,7 +123,7 @@
                 <td><label for="formGroupExampleInput">Fecha de inicio del pago : </label></td>
                 <td><input type="date" class="form-control" id="fechainicio" name="fechainicio" required></td>
                 <td><label for="formGroupExampleInput">Fecha fin del pago : </label></td>
-                <td><input type="date" class="form-control" id="fechafin" name="fechafin" required></td>
+                <td><input type="date" class="form-control" id="fechafin" name="fechafin"  required></td>
 
 
 
@@ -134,16 +133,16 @@
                 <td><label for="formGroupExampleInput">Interes : </label></td>
                 <td><input type="text" class="form-control" id="interes" name="interes" value="0.19" disabled></td>
                 <td><label for="formGroupExampleInput">Monto de cuotas sin interes : </label></td>
-                <td><input type="text" class="form-control" id="mcuotassininteres" name="mcuotassininteres" required></td>
+                <td><input type="text" class="form-control" id="mcuotassininteres" name="mcuotassininteres" readonly onclick="llenar()" required></td>
 
 
 
             </tr>
             <tr>
                 <td><label for="formGroupExampleInput">Monto de cuotas con interes : </label></td>
-                <td><input type="text" class="form-control" id="mcuotasconinteres" name="mcuotasconinteres" disabled required></td>
+                <td><input type="text" class="form-control" id="mcuotasconinteres" name="mcuotasconinteres"  required></td>
                 <td><label for="formGroupExampleInput">Total del prestamo : </label></td>
-                <td><input type="text" class="form-control" id="total" name="total" disabled required></td>
+                <td><input type="text" class="form-control" id="total" name="total"  required></td>
 
 
             </tr>
@@ -192,9 +191,25 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+<script src="~/Js/Evento_prestamo.js"></script>
+
+@*<script>
+
+    function llenar() {
 
 
+        var m = document.getElementById("monto").value;
+        var c = document.getElementById("cuotas").value; 
 
+        var f = m / c; 
+
+        document.getElementById("mcuotassininteres").value=f;
+
+
+    }
+
+
+</script>*@
 
 
 
