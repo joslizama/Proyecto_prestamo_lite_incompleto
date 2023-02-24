@@ -594,8 +594,8 @@ namespace Prestamos.Lite.Controllers
      }else{
 
        var dp = dbc.Prestamoes.Find(id);
-       TempData["lpago"] = dbc.Tipo_pago;
-       TempData["lmoneda"] = dbc.Tipo_moneda;
+       TempData["lpago"] = dbc.Tipo_pago.ToList();
+       TempData["lmoneda"] = dbc.Tipo_moneda.ToList();
        TempData["lcliente"] = dbc.Clientes.ToList();
 
 
@@ -747,14 +747,70 @@ namespace Prestamos.Lite.Controllers
             var tpago = Convert.ToInt32(Request.Form["tpago"]);
             var monto = Convert.ToDouble(Request.Form["monto"]);
             var cuotas = Convert.ToInt32(Request.Form["cuotas"]);
-            var fechainicio = Convert.ToDateTime(Request.Form["fechainicio"]);
-            var fechafin = Convert.ToDateTime(Request.Form["fechafin"]);
+            var fechainicio = Convert.ToString(Request.Form["fechainicio"]);
+            var fechafin = Convert.ToString(Request.Form["fechafin"]);
             var interes = Convert.ToDouble(Request.Form["interes"]);
             var mcuotassininteres = Convert.ToDouble(Request.Form["mcuotassininteres"]);
             var mcuotasconinteres = Convert.ToDouble(Request.Form["mcuotasconinteres"]);
             var total = Convert.ToDouble(Request.Form["total"]);
             var rcliente = Convert.ToString(Request.Form["rcliente"]);
             var clausulas = Convert.ToString(Request.Form["clausulas"]);
+
+
+
+            //Modificar la fecha de inicio de pago 
+
+            var fechainicio2 = DateTime.UtcNow.ToString(fechainicio);
+            var fechainicio3 = Convert.ToDateTime(fechainicio2);
+
+
+            var fechafin2 = DateTime.UtcNow.ToString(fechafin);
+            var fechafin3 = Convert.ToDateTime(fechafin2);
+
+            
+            //Agregar prestamos 
+
+            Prestamo p = new Prestamo
+            {
+                fecha_registro_prestamo = DateTime.Today,
+                tipo_moneda_id=tmoneda,
+                tipo_pago_id=tpago,
+                fecha_inicio_pago =fechainicio3,
+                fecha_fin_pago = fechafin3,
+                monto_prestamo=monto,
+                numero_cuotas =cuotas,
+                intereses=interes,
+                monto_cuotas_sin_interes=mcuotassininteres,
+                monto_cuotas_con_interes=mcuotasconinteres,
+                total_prestamo=total,
+                cliente_id=rcliente,
+                estado_prestamo= "En proceso",
+                clausulas=clausulas
+
+
+            };
+
+            dbc.Prestamoes.Add(p);
+            dbc.SaveChanges(); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             return Json(JsonRequestBehavior.AllowGet);

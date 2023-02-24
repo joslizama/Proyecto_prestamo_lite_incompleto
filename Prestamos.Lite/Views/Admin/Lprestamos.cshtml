@@ -150,62 +150,63 @@
 
             @foreach (var i in Model)
             {
-            <tr>
-                <td><label>@i.numero_operacion</label></td>
-                <td><label>@i.fecha_registro_prestamo</label></td>
-                <td><label>@i.monto_prestamo</label></td>
-                <td>
+                <tr>
+                    <td><label>@i.numero_operacion</label></td>
+                    <td><label>@i.fecha_registro_prestamo</label></td>
+                    <td><label>@i.monto_prestamo</label></td>
+                    <td>
 
-                    @foreach (var j in TempData["lpagos"] as List<Prestamos.Lite.Models.Tipo_pago>)
-                    {
-                        var idpago = Convert.ToInt32(i.tipo_pago_id);
-
-                        if (idpago == j.id)
+                        @foreach (var j in TempData["lpagos"] as List<Prestamos.Lite.Models.Tipo_pago>)
                         {
+                            var idpago = Convert.ToInt32(i.tipo_pago_id);
 
-                            <label>@j.nombre</label>
+                            if (idpago == j.id)
+                            {
+
+                                <label>@j.nombre</label>
+                            }
+
+
+
                         }
+
+                    </td>
+                    @if (i.estado_prestamo.Equals("Pagado"))
+                    {
+                        <td id="estado">@i.estado_prestamo</td>
 
 
 
                     }
+                    else if (i.estado_prestamo.Equals("Cancelado"))
+                    {
 
-                </td>
-                @if (i.estado_prestamo.Equals("Pagado"))
-                {
-                    <td id="estado">@i.estado_prestamo</td>
-
+                        <td id="estado2">@i.estado_prestamo</td>
 
 
-                }
-                else if (i.estado_prestamo.Equals("Cancelado"))
-                {
-
-                    <td id="estado2">@i.estado_prestamo</td>
-
-
-                }
-                else if(i.estado_prestamo.Equals("En proceso"))
-                {
-                    <td >@i.estado_prestamo</td>
+                    }
+                    else if (i.estado_prestamo.Equals("En proceso"))
+                    {
+                        <td>@i.estado_prestamo</td>
 
 
-                }
+                    }
 
-            </tr>
                 <tr>
                     <td>
-                        <a href="@Url.Action("Dprestamos","Admin",new {id=i.numero_operacion })" class="btn btn-outline-secondary"><i class='bx bx-detail'></i></a>
+                        <a href="@Url.Action("Dprestamos","Admin",new {id=i.numero_operacion })" class="btn btn-outline-info"><i class='bx bx-detail'></i></a>
                         /
                         <a href="@Url.Action("Lcuotas","Admin",new {id=i.numero_operacion })" class="btn btn-outline-dark"><i class='bx bx-list-ul'></i></a>
                         /
                         @*<a></a>
-                        /*@
+                    /*@
                         <a href="@Url.Action("Cprestamo","Admin",new {id=i.numero_operacion })" class="btn btn-outline-danger"><i class='bx bx-trash'></i></a>
                     </td>
 
                 </tr>
-                
+
+                </tr>
+
 
 
             }

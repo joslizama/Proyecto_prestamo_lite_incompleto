@@ -140,9 +140,9 @@
             </tr>
             <tr>
                 <td><label for="formGroupExampleInput">Monto de cuotas con interes : </label></td>
-                <td><input type="text" class="form-control" id="mcuotasconinteres" name="mcuotasconinteres"  required></td>
+                <td><input type="text" class="form-control" id="mcuotasconinteres" name="mcuotasconinteres" readonly onclick="llenar2()" required></td>
                 <td><label for="formGroupExampleInput">Total del prestamo : </label></td>
-                <td><input type="text" class="form-control" id="total" name="total"  required></td>
+                <td><input type="text" class="form-control" id="total" name="total" readonly onclick="llenar3()"  required></td>
 
 
             </tr>
@@ -192,24 +192,6 @@
 </body>
 </html>
 <script src="~/Js/Evento_prestamo.js"></script>
-
-@*<script>
-
-    function llenar() {
-
-
-        var m = document.getElementById("monto").value;
-        var c = document.getElementById("cuotas").value; 
-
-        var f = m / c; 
-
-        document.getElementById("mcuotassininteres").value=f;
-
-
-    }
-
-
-</script>*@
 
 
 
