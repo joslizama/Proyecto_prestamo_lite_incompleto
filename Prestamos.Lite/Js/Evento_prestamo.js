@@ -36,10 +36,11 @@ function llenar3()
 
     var f = parseFloat(m * i); 
 
-    var f2 = parseFloat(m + f);
+    var f2 = parseFloat(f);
+    var f3 = parseFloat(m);
+    var f4 = parseFloat(f2 + f3);
 
-
-    document.getElementById("total").value = f2;
+    document.getElementById("total").value = parseFloat(f4);
 
     
 }

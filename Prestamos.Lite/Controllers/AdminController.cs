@@ -739,10 +739,10 @@ namespace Prestamos.Lite.Controllers
       return View();
 
     }
-   //Nuevo prestamos controlador
-   [HttpPost]
-    public JsonResult Nprestamosc()
-    {
+        //Nuevo prestamos controlador
+        [HttpPost]
+        public JsonResult Nprestamosc()
+        {
             var tmoneda = Convert.ToInt32(Request.Form["tmoneda"]);
             var tpago = Convert.ToInt32(Request.Form["tpago"]);
             var monto = Convert.ToDouble(Request.Form["monto"]);
@@ -767,48 +767,89 @@ namespace Prestamos.Lite.Controllers
             var fechafin2 = DateTime.UtcNow.ToString(fechafin);
             var fechafin3 = Convert.ToDateTime(fechafin2);
 
-            
+
             //Agregar prestamos 
 
             Prestamo p = new Prestamo
             {
                 fecha_registro_prestamo = DateTime.Today,
-                tipo_moneda_id=tmoneda,
-                tipo_pago_id=tpago,
-                fecha_inicio_pago =fechainicio3,
+                tipo_moneda_id = tmoneda,
+                tipo_pago_id = tpago,
+                fecha_inicio_pago = fechainicio3,
                 fecha_fin_pago = fechafin3,
-                monto_prestamo=monto,
-                numero_cuotas =cuotas,
-                intereses=interes,
-                monto_cuotas_sin_interes=mcuotassininteres,
-                monto_cuotas_con_interes=mcuotasconinteres,
-                total_prestamo=total,
-                cliente_id=rcliente,
-                estado_prestamo= "En proceso",
-                clausulas=clausulas
+                monto_prestamo = monto,
+                numero_cuotas = cuotas,
+                intereses = interes,
+                monto_cuotas_sin_interes = mcuotassininteres,
+                monto_cuotas_con_interes = mcuotasconinteres,
+                total_prestamo = total,
+                cliente_id = rcliente,
+                estado_prestamo = "En proceso",
+                clausulas = clausulas
 
 
             };
 
             dbc.Prestamoes.Add(p);
-            dbc.SaveChanges(); 
+            dbc.SaveChanges();
+
+            var pid = Convert.ToInt32(p.numero_operacion);
+
+            //Obtener el mes de la fecha 
+            var m = Convert.ToInt32(fechainicio3.Month);
+            ////Obtener la fecha separada 
+            //var d = Convert.ToString(fechainicio3.Day);
+            ////var m2 = Convert.ToString(fechafin3.Month);
+            //var a = Convert.ToString(fechafin3.Year);
+
+            //Hacer el for para crear registros de cuotas 
+
+            var ncuotas = Convert.ToInt32(cuotas);
+
+            //Obtener la fecha separada 
+            var d = Convert.ToString(fechainicio3.Day);
+            //var m2 = Convert.ToString(fechafin3.Month);
+            var a = Convert.ToString(fechafin3.Year);
+
+            //Generar la fecha 
+
+            //var m2 = Convert.ToInt32(i);
+
+            //var fc = Convert.ToString(a + "-" + m + "-" + d);
+
+            //var fc2 = DateTime.UtcNow.ToString(fc);
+            ////Fecha valida 
+            //var fc3 = Convert.ToDateTime(fc2);
+
+            //Hacer un for de cuotas 
+            
+            for(int i = 1; i <= ncuotas; i++)
+            {
+                //Sumar los meses a la cutoa 
+                var m2 = Convert.ToInt32(m + i);
+
+                //Generar el año mediante string 
+
+                var s = Convert.ToString(a + " - " + m2 + " - " + d);
+
+                var s2 = Convert.ToDateTime(DateTime.UtcNow.ToString(s));
 
 
+                Cuota c = new Cuota
+                {
+                    prestamo_id = pid,
+                    numero_cuota=i,
+                    fecha_pago_cuota=s2,
+                    monto_cuota=mcuotasconinteres,
+                    estado_cuota="Por pagar",
+                    fecha_pago_cliente=null
 
+                };
 
+                dbc.Cuotas.Add(c);
+                dbc.SaveChanges();
 
-
-
-
-
-
-
-
-
-
-
-
-
+            }
 
 
 
