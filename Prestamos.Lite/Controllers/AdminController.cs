@@ -857,8 +857,73 @@ namespace Prestamos.Lite.Controllers
             return Json(JsonRequestBehavior.AllowGet);
 
     }
-   //
+   //Listado de cuotas del prestamo 
+   public ActionResult Lcuotas(int?p,int id)
+   {
 
+      int r = 4;
+      int np = p ?? 1;
+
+
+      var idp = Convert.ToInt32(id);
+
+
+      //var lcuotas = dbc.Cuotas.Where(x=> x.prestamo_id == idp).SingleOrDefault(); 
+
+
+     //if(lcuotas == null)
+     //{
+     //  return RedirectToAction("Error_admin", "Admin");
+
+     //}else{
+
+      var lcuotas2 = dbc.Cuotas.Where(x => x.prestamo_id == idp).ToList();
+
+
+       return View(lcuotas2.ToPagedList(np, r));
+
+
+     //}
+   }
+  //Pagar la cuota 
+  public ActionResult Pcuotas(int id)
+  {
+
+    if(id == null)
+    {
+      return RedirectToAction("Error_admin", "Admin");
+
+    }else{
+
+     var pcuota = dbc.Cuotas.Find(id);
+     var pcuota2 = Convert.ToInt32(pcuota.numero_cuota);
+
+     if(pcuota == null)
+     {
+      return RedirectToAction("Error_admin", "Admin");
+
+     }else{
+
+      var c = dbc.Cuotas.Where(p => p.numero_cuota== pcuota2).SingleOrDefault();
+
+      if(c == null)
+      {
+       return RedirectToAction("Error_admin", "Admin");
+
+      }else{
+
+       c.estado_cuota = "Pagado";
+       dbc.SaveChanges();
+
+       return RedirectToAction("Lcuotas", "Admin");
+
+
+
+      }
+     }
+    }
+  } 
+ //
 
 
 

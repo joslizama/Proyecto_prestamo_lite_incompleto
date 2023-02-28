@@ -1,0 +1,234 @@
+﻿@model IPagedList<Prestamos.Lite.Models.Cuota>
+
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    /**/
+
+
+    var r = Convert.ToString(Session["rut"]);
+    var t = Convert.ToInt32(Session["tipo"]);
+
+    if (r == null || r == "" || t == null || t != 1)
+    {
+
+        Response.Redirect("~/Home/Error");
+
+    }
+
+
+
+}
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Cuotas</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Estilos/Estilo_tab.css">
+    <style>
+
+        label.error {
+            color: red;
+        }
+
+        estado1 {
+            color: green;
+        }
+
+      
+    </style>
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <script src="~/Scripts/jquery-3.6.3.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Prestamos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Lprestamos">Voler al listado de prestamo</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Index_admin">Volver al inicio</a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Admin/Csesion">Cerrar sesion</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Page Content -->
+    <!--Tabs-->
+    <br />
+    
+    
+    <table class="table table-sm" align="center">
+        <thead>
+            <tr>
+                <th scope="col" colspan="8" align="center"><center><h6>Listado de Cuotas</h6></center></th>
+
+            </tr>
+        </thead>
+        <thead>
+            <tr>
+                <td><label>Numero de cuota </label></td>
+                <td><label>Fecha de pago cuota</label></td>
+                <td><label>Monto de cuota</label></td>
+                <td><label>Estado de cuota</label></td>
+                <td><label>Fecha de pago cliente</label></td>
+                <td><label>Acciones</label></td>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var i in Model)
+            { 
+                <tr>
+                    <td><label>@i.numero_cuota</label></td>
+                    <td><label>@i.fecha_pago_cuota</label></td>
+                    <td><label>@i.monto_cuota</label></td>
+                    <td>
+                        @{
+                            var estado = Convert.ToString(i.estado_cuota);
+
+                            if (estado.Equals("Por pagar"))
+                            {
+
+                                <label>@i.estado_cuota</label>
+
+
+
+                            }
+                            else
+                            {
+                                <label id="estado1">@i.estado_cuota</label>
+
+
+
+                            }
+
+
+
+
+
+                        }
+
+
+
+                    </td>
+                    <td>
+                        @{
+
+                            if (i.fecha_pago_cliente == null)
+                            {
+                                <label>No pagado</label>
+
+
+                            }
+                            else
+                            {
+                                <label >@i.fecha_pago_cliente</label>
+
+
+
+                            }
+
+
+                        }
+
+                    </td>
+                    <td>
+
+                        @{
+
+                            var f = Convert.ToDateTime(DateTime.Today);
+
+
+                            if (f >= i.fecha_pago_cuota)
+                            {
+                                <a href="@Url.Action("Pcuotas","Admin",new {id=i.id })" class="btn btn-outline-success">Pagar</a>
+
+
+                            }
+                            else
+                            {
+
+                                <button type="button" name="Mensaje" id="Mensaje" value="Mensaje" onclick="Mensaje()" class="btn btn-light">Mensaje</button>
+
+                            }
+
+
+
+
+                        }
+
+
+
+
+
+                    </td>
+
+
+
+
+
+
+                </tr>
+
+
+
+
+
+            }
+
+
+            
+
+
+
+
+
+
+        </tbody>
+    </table>
+
+    @Html.PagedListPager(Model, p => Url.Action("Lcuotas", new { p, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.slim.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script>
+
+    function Mensaje()
+    {
+        alert("No se puede alterar este campo");
+    }
+
+
+</script>

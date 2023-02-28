@@ -251,6 +251,7 @@
     <Content Include="Views\Admin\Dprestamos.cshtml" />
     <Content Include="Views\Admin\LPrestamos2.cshtml" />
     <Content Include="Views\Admin\Nprestamos.cshtml" />
+    <Content Include="Views\Admin\Lcuotas.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
