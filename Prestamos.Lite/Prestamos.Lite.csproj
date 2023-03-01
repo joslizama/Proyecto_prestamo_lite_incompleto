@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
+    <Content Include="Estilos\estilos_table.css" />
     <Content Include="Estilos\Estilo_tab.css" />
     <Content Include="Estilos\Login_estilo.css" />
     <Content Include="Global.asax" />

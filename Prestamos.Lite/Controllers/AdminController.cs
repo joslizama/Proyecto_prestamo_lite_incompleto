@@ -923,8 +923,45 @@ namespace Prestamos.Lite.Controllers
      }
     }
   } 
- //
+ //Cancelar prestamos 
+  public ActionResult Cprestamo(int id)
+  {
+    if(id == null)
+    {
+      return RedirectToAction("Error_admin", "Admin");
 
+    }else{
+
+     var cp = dbc.Prestamoes.Find(id);
+     var cp2 = Convert.ToInt32(cp.numero_operacion);
+
+     if (cp == null)
+     {
+      return RedirectToAction("Error_admin", "Admin");
+
+     }else{
+
+
+
+
+       var x = dbc.Prestamoes.Where(p => p.numero_operacion == cp2).SingleOrDefault();
+
+       x.estado_prestamo = "Cancelado";
+
+       var cadena = Convert.ToString("Cancelado");
+
+       var z = dbc.Database.ExecuteSqlCommand("UPDATE Cuotas SET estado_cuota = '" + cadena + "' WHERE prestamo_id ='" + cp2 + "' ");
+
+       dbc.SaveChanges();
+
+       return RedirectToAction("Lprestamos","Admin");
+
+
+     }
+     
+   }
+  }
+ //
 
 
 

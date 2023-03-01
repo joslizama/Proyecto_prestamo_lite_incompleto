@@ -42,7 +42,10 @@
         estado1 {
             color: green;
         }
+        estado2{
 
+            color:red;
+        }
       
     </style>
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -120,11 +123,17 @@
 
 
                             }
+                            else if (estado.Equals("Cancelado"))
+                            {
+                                <label id="estado2">@i.estado_cuota</label>
+
+
+
+                            }
                             else
                             {
+
                                 <label id="estado1">@i.estado_cuota</label>
-
-
 
                             }
 

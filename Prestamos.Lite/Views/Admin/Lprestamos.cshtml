@@ -173,7 +173,7 @@
                     </td>
                     @if (i.estado_prestamo.Equals("Pagado"))
                     {
-                        <td id="estado">@i.estado_prestamo</td>
+                        <td><label id="estado">@i.estado_prestamo</label></td>
 
 
 
@@ -181,7 +181,7 @@
                     else if (i.estado_prestamo.Equals("Cancelado"))
                     {
 
-                        <td id="estado2">@i.estado_prestamo</td>
+                        <td><label id="estado2">@i.estado_prestamo</label></td>
 
 
                     }
@@ -193,13 +193,27 @@
                     }
 
                 <tr>
-                    <td>
+                    <td> 
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
                         <a href="@Url.Action("Dprestamos","Admin",new {id=i.numero_operacion })" class="btn btn-outline-info"><i class='bx bx-detail'></i></a>
                         /
                         <a href="@Url.Action("Lcuotas","Admin",new {id=i.numero_operacion })" class="btn btn-outline-dark"><i class='bx bx-list-ul'></i></a>
                         /
-                        @*<a></a>
-                    /*@
+                        @*<a></a>/*@
                         <a href="@Url.Action("Cprestamo","Admin",new {id=i.numero_operacion })" class="btn btn-outline-danger"><i class='bx bx-trash'></i></a>
                     </td>
 
