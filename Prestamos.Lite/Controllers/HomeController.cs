@@ -33,7 +33,7 @@ namespace Prestamos.Lite.Controllers
             var contraseña = Convert.ToString(Request.Form["contraseña"]);
 
             //Hacer login del usuario 
-            var c = dbc.Usuarios.Where(p => p.cliente_id == rut && p.contraseña == contraseña).SingleOrDefault();
+            var c = dbc.Usuarios.Where(p => p.cliente_id.Equals(rut) && p.contraseña.Equals(contraseña)).SingleOrDefault();
 
             if(c == null)
             {
@@ -111,7 +111,7 @@ namespace Prestamos.Lite.Controllers
                             Session["apellido"] = Convert.ToString(g.apellido);
                             Session["tipo"] = Convert.ToInt32(3);
 
-                            return RedirectToAction("Index_cliente", "Cliente");
+                            return RedirectToAction("Index_cliente", "Clientes");
 
                         }
 
